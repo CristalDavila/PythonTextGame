@@ -2,6 +2,7 @@ from sqlalchemy import Column, String, create_engine, Integer, ForeignKey
 from sqlalchemy.orm import relationship 
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import joinedload
 
 Base = declarative_base()
 
@@ -144,11 +145,13 @@ def what_to_wear():
         if choice == '1':
             print("You are The Night. The Dark Knight. Proceed to the party")
             set_the_scene()
+            player_score.score += 1 
             break
         
         elif choice == '2':
             print("When you laugh, the world laughs with you. But you are not laughing. This clown makeup is bad for your skin, and that is not a joke. None the less, proceed to the party.")
             set_the_scene()
+            player_score.score -= 1 
             break
     
         else:
@@ -179,11 +182,13 @@ def set_the_scene():
         if choice == '1':
             print("The person at the door manages to glare at you strongly enough that you feel the contempt, which is impressive given that they're wearing a latex mask. You ignore it and step inside.")
             halloween_party()
+            player_score.score += 1 
             break
 
         elif choice == '2':
             print("Through the holes in the latex mask, you can see Frankenstein's eyes narrow with skepticism, but they don't question you, they just stand aside as you step into the party.")
             halloween_party()
+            player_score.score -= 1 
             break
 
         else:
@@ -205,11 +210,13 @@ def halloween_party():
         if choice == '1':
             print("Oh, I see. Ms. Thorne is clinging to superstition rather than dealing with her trauma. That seems healthy. Not like she can afford a therapist.' you say while smirking.")
             halloween_party_two()
+            player_score.score += 1 
             break
 
         elif choice == '2':
             print("'Uh huh. Interesting.' you mumble while shoving cubes of cheese into your mouth.")
             halloween_party_two()
+            player_score.score -= 1 
             break
 
         else:
@@ -229,11 +236,13 @@ def halloween_party_two():
         if choice == '1':
             print("You choose to go into the library, it looks so warm and inviting. ")
             library()
+            player_score.score += 1 
             break
 
         elif choice == '2':
             print("You decide to find a comfortable chair in the sitting room, maybe chat with other guests.")
             sitting_room()
+            player_score.score += 1 
             break
         
         else:
@@ -256,11 +265,13 @@ def library():
         if choice == '1':
             print("The sitting room is calling to you. ")
             sitting_room()
+            player_score.score += 1 
             break
 
         elif choice == '2':
             print("Fresh air sounds nice, you'll go out to the patio.")
             patio()
+            player_score.score += 1 
             break
         
         else:
@@ -307,11 +318,13 @@ def patio():
         if choice == '1':
             print("Uhg, let's get this nonsense over with")
             seance()
+            player_score.score += 1 
             break
 
         elif choice == '2':
             print("You hate to admit it, but you're interested to see what will happen.")
             seance()
+            player_score.score += 1 
             break
 
         else:
@@ -358,11 +371,13 @@ def seance():
         if choice == '1':
             print("""As you and the others walk down the stairs, Hazel says,"can you believe this drama?? """)
             murder()
+            player_score.score += 1 
             break
 
         elif choice == '2':
             print("Yeah, I'm going down the stairs. And then I'm going right out that door.")
             termination_one()
+            player_score.score -= 1 
             break
 
         else:
@@ -382,11 +397,13 @@ def murder():
         if choice == '1':
             print("You didn't get this far in your detective career by NOT asking questions. A person commited this crime, and your are going to find out who dunnit.")
             who_to_question()
+            player_score.score += 1 
             break
 
         elif choice == '2':
             print("Twas ghosts. Time to go home and maybe take up religion. And drinking.")
             termination_one()
+            player_score.score -= 1 
             break
         
         else:
@@ -409,7 +426,7 @@ def who_to_question():
 
         if choice == '1':
             print("Ms. Troy, the assitant, seems to have some resentment toward her boss. Question her.")
-            question_Troy()
+            question_Troy() 
             break
 
         elif choice == '2':
@@ -538,9 +555,37 @@ def adelaide_did_it():
         print("Adelaide, you're going to juvie.Sad. THE END. ")
         break
 
+
 def termination2():
-        print("Good job, you solved the crime. You are a fabulous detective and also quite stylish, but if you still have that clown costume you should burn it. THE END")
-        
+    global logged_in_player
+
+    player_score = (
+        session.query(PlayerScore)
+        .filter_by(player=logged_in_player)
+        .options(joinedload(PlayerScore.player))
+        .first()
+    )
+
+    if player_score is not None:
+        print(f"Your final score: {player_score.score}")
+
+        if player_score.score > 100:
+            # Display a skull ASCII art BWAHAHA
+            print("Congratulations! You have a high score. Here's a skull for you:")
+            print("   ____")
+            print("  / __ \\")
+            print(" / /  \\ \\")
+            print("| | () | |")
+            print(" \\ \\__/ /")
+            print("  \\____/")
+        elif player_score.score < 100:
+            print("You have a score less than 100.")
+        else:
+            print("Your score is exactly 100.")
+
+    print("Good job, you solved the crime. You are a fabulous detective and also quite stylish, but if you still have that clown costume you should burn it. THE END")
+    print_player_scores(logged_in_player.id)
+
 
 if __name__ == '__main__':
     logged_in_player = None  
