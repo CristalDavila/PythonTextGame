@@ -15,7 +15,7 @@ class Player(Base):
     password = Column(String())
 
     scores = relationship('PlayerScore', back_populates='player')
-
+    
 class PlayerScore(Base):
     __tablename__ = 'player_scores'
 
@@ -24,6 +24,7 @@ class PlayerScore(Base):
     score = Column(Integer, default=0)
 
     player = relationship('Player', back_populates='scores')
+    player_name = Column(String())  # Add this line
 
 def print_player_scores(player_id):
     player_scores = session.query(PlayerScore).filter_by(player_id=player_id).all()
@@ -31,6 +32,7 @@ def print_player_scores(player_id):
         print(player_score.id, player_score.player_id, player_score.score)
 
 engine = create_engine('sqlite:///players.db')
+Base.metadata.drop_all(engine) #refresh the tables
 Base.metadata.create_all(engine)
 
 Session = sessionmaker(bind=engine)
@@ -50,7 +52,7 @@ def create_player():
         session.commit()
         print(f"Player {new_player.username} has been created!")
 
-        player_score = PlayerScore(player=new_player, score=100)
+        player_score = PlayerScore(player=new_player, player_name=new_player.username, score=100)
         session.add(player_score)
         session.commit()
         print(f"Initial score for {new_player.username} has been set!")
@@ -129,7 +131,7 @@ def start_story():
     if player_score is not None:
         player_score.score += 1  
         session.commit()
-        what_to_wear()
+        
     else:
         print("No score found for this player.")
 
@@ -146,13 +148,15 @@ def what_to_wear():
             print("You are The Night. The Dark Knight. Proceed to the party")
             set_the_scene()
             player_score.score += 1 
-            break
+            return 'batman'
+            
         
         elif choice == '2':
             print("When you laugh, the world laughs with you. But you are not laughing. This clown makeup is bad for your skin, and that is not a joke. None the less, proceed to the party.")
             set_the_scene()
             player_score.score -= 1 
-            break
+            return 'clown'
+            
     
         else:
             print("Invalid choice. Please try again.")
@@ -538,21 +542,25 @@ def question_Adelaide():
 def troy_did_it():
     while True:
         print("Troy did it. How awful. THE END.")
+        termination2()
         break 
 
 def thorne_did_it():
     while True:
         print("Thorne did it, can you believe?? THE END")
+        termination2()
         break
 
 def foxcroft_did_it():
     while True:
         print("Foxcroft, I knew it, terrible. THE END.")
+        termination2()
         break
 
 def adelaide_did_it():
     while True:
         print("Adelaide, you're going to juvie.Sad. THE END. ")
+        termination2()
         break
 
 
@@ -570,7 +578,6 @@ def termination2():
         print(f"Your final score: {player_score.score}")
 
         if player_score.score > 100:
-            # Display a skull ASCII art BWAHAHA
             print("Congratulations! You have a high score. Here's a skull for you:")
             print("   ____")
             print("  / __ \\")
