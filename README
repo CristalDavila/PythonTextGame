@@ -1,0 +1,53 @@
+Hello, this is my Phase 3 Project. 
+
+
+ABOUT
+
+I used Python along with SQLAlchemy and SQLite to build the project.
+
+This is a "Choose-Your-Own-Adventure" style text game with a scoring system.
+
+The user can create a player by providing a username, password, and unique email address.
+
+Once they have created a player, they can log in and either update their email, delete a player, or proceed with the story.
+
+The user starts the story with a base score of 100, and based on their decisions that score is either incremented or decremented. 
+If the user reaches the final ending with a score greater than 100 it triggers a special ending message and displays a "skull" ASCII graphic.
+Please note, the "skull" resembles a target rather than a skull, I asked ChatGPT to make a skull ASCII graphic for me and I was amused by 
+how terrible the result was, so I kept it. The better ASCII graphics I used for a clown face and for Batman were from 
+ASCII.co.uk. 
+
+There are several alternate ending throughout the game. A user can choose to opt out several times by either declining 
+to attend the Halloween party or leaving the party when things get weird. If the user decides to stick around they will get
+a chance to decide which of various suspects they believe to be guilty of the murder. For now the text related to interviewing 
+the suspects is minimal and each decision results in the same ending, this is something I would develop out more if I wanted to
+share this project outside of school.
+
+The final details I worked out on this project were to add the ASCII images and debug- there was a loop at the end of the game that would return you to the costume selection scene. 
+
+HOW TO RUN
+
+From the command line/terminal you can open up the parent directory of this file, 
+*Run pipenv install && pipenv shell
+*Run python GAMEPROJECT.py
+
+You will see an option to log in, create a player, or delete a player.
+
+You'll need to create a character, it will prompt you to provide a username, password, and email address.
+
+Once you've done that, you will be able to log in with your new credentials.
+
+Go through the story, depending on the choices you make the story may end quickly. 
+
+If you complete the main story line and accrue more that 100 points it will give you a message and display a skull 
+that looks nothing like a skull- good job!
+
+Please let me know if you have any questions!
+
+
+
+
+
+
+
+
