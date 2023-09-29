@@ -146,6 +146,37 @@ def what_to_wear():
 
         if choice == '1':
             print("You are The Night. The Dark Knight. Proceed to the party")
+            print ("""
+            
+
+                  T\ T\
+                  | \| \
+                  |  |  :
+             _____I__I  |
+           .'            '.
+         .'                '
+         |   ..             '
+         |  /__.            |
+         :.' -'             |
+        /__.                |
+       /__, \               |
+          |__\        _|    |
+          :  '\     .'|     |
+          |___|_,,,/  |     |    _..--.
+       ,--_-   |     /'      \../ /  /\\
+      ,'|_ I---|    7    ,,,_/ / ,  / _\\
+    ,-- 7 \|  / ___..,,/   /  ,  ,_/   '-----.
+   /   ,   \  |/  ,____,,,__,,__/            '\
+  ,   ,     \__,,/                             |
+  | '.       _..---.._                         !.
+  ! |      .' z_M__s. '.                        |
+  .:'      | (-_ _--')  :          L            !
+  .'.       '.  Y    _.'             \,         :
+   .          '-----'                 !          .
+   .           /  \                   .          .
+
+
+                   """)
             set_the_scene()
             player_score.score += 1 
             return 'batman'
@@ -153,6 +184,15 @@ def what_to_wear():
         
         elif choice == '2':
             print("When you laugh, the world laughs with you. But you are not laughing. This clown makeup is bad for your skin, and that is not a joke. None the less, proceed to the party.")
+            print("""
+       ,---.
+     ,'_   _`.
+   {{ |o| |o| }}
+  {{{ '-'O'-' }}}
+  {{( (`-.-') )}}
+   {{{.`---',}}}
+       `---'    
+                  """)
             set_the_scene()
             player_score.score -= 1 
             return 'clown'
