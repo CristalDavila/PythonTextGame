@@ -24,7 +24,7 @@ class PlayerScore(Base):
     score = Column(Integer, default=0)
 
     player = relationship('Player', back_populates='scores')
-    player_name = Column(String())  # Add this line
+    player_name = Column(String()) 
 
 def print_player_scores(player_id):
     player_scores = session.query(PlayerScore).filter_by(player_id=player_id).all()
@@ -32,7 +32,6 @@ def print_player_scores(player_id):
         print(player_score.id, player_score.player_id, player_score.score)
 
 engine = create_engine('sqlite:///players.db')
-Base.metadata.drop_all(engine) #refresh the tables
 Base.metadata.create_all(engine)
 
 Session = sessionmaker(bind=engine)
